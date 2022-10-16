@@ -1,35 +1,36 @@
 # RegionDCL - Code Instructions
 
-- This repository includes essential scripts corresponding to the proposed framework in our paper:  **Urban Region Representation Learning ｗith OpenStreetMap Building Footprints**
+- This repository includes essential scripts of the proposed framework RegionDCL in our paper:  **Urban Region Representation Learning ｗith OpenStreetMap Building Footprints**
 
 ## Quick Start
 
-- For your convenient, we prepare the content for you to 
-  - Quickly reproduce the result table in the paper
-  - Quickly train the model and get the region embeddings for Singapore Subzones
+- With this repository, you can
+  - Quickly reproduce the results in the paper
+  - Quickly train the model and get the region embeddings of Singapore Subzones, and evaluate its performance.
 
 ### Environment
 
-Required for evaluation: Install the following 
+Required for evaluation:
 
-- Please use Miniconda or Anaconda
-- Python 3.7 or 3.8 are both acceptable.
-- PyTorch >= 1.5.1 with GPU (for train only). We use PyTorch == 1.8.2
+- Please use **Miniconda or Anaconda**
+- python 3.7 or 3.8 are acceptable. Higher version is not tested.
+- pytorch >= 1.5.1 with GPU (for train only). We use pytorch == 1.8.2
 - geopandas == 0.9.0 
   - Can be easily installed with **conda install geopandas**
-- sklearn == 1.1.2 (For evaluation purpose. Other version may be acceptable)
-- tqdm (for progress bar only. You can use any version)
-- seaborn (for visualizing the bar n quality_analysis.py)
+- sklearn == 1.1.2 (For evaluation purpose only. Other versions may be also acceptable)
+- tqdm (For progress bar only. You can use any version)
+- seaborn (For visualizing the bar in quality_analysis.py only)
 
-For training, you need to add the following packages
+For training, you need to add the following package:
 
 - pot == 0.8.2 (Python Optimal Transport Library for adaptive margin calculation)
 
-And ensure you have roughly 16 GB GPU available memory (if not, you need to low down the batch size in the trainer.py)
+- And ensure you have roughly 16 GB GPU available memory (If not, you need to low down the batch size in the trainer.py)
 
 ### Experiment
 
-- We randomly picked one embeddings into the /baselines/ folder. You can quickly evaluate all baselines versus our method. 
+- For your convenience, we randomly picked one embedding for each baseline into the /baselines/ folder.
+- You can quickly evaluate all baselines versus our method. 
 - We strictly conduct experiments without any cherry-picking, so the result should be very close to that reported in our paper.
 
 #### Main Experiment (Land Use / Population Inference in Singapore and NYC)
@@ -53,12 +54,12 @@ RegionDCL                     0.495     0.036     0.281     0.039     0.882     
 - The main_experiment.py has the following options:
   - --city: can be **Singapore** or **NYC**
   - --task: can be **land** or **pop**
-  - --partition: can be **default** (in Singapore this will be subzones, in NYC will be census tract) or **grid**
-    - Note that grid partition only works for Singapore
+  - --partition: can be **default** (in Singapore this will be subzones, in NYC will be census tract) or **grid**(2km * 2km)
+    - *Note that grid partition only works in Singapore*
 
 #### Embedding Quality Analysis
 
-- Simply execute /evaluator/quality_analysis.py. You should be able to see the picture in the paper like this:![singapore_data_sparsity_land_use](.\visualization\singapore_data_sparsity_land_use.png)
+- Simply execute /evaluator/quality_analysis.py. You should be able to see the picture in the paper like this:![singapore_data_sparsity_land_use](../blob/master/visualization/singapore_data_sparsity_land_use.png?raw=true)
 
 - The following options are available:
   - --city: can be **Singapore** or **NYC**
@@ -66,7 +67,7 @@ RegionDCL                     0.495     0.036     0.281     0.039     0.882     
 
 ## Training
 
-- Unzip the building_feature.7z in the data/processed/Singapore 
+- Unzip the building_feature.7z in the data/processed/Singapore.
   - This is the feature extracted by **model/resnet.py**
   - So alternatively, you can use the script to train the resnet and generate new features. **Timm** library is needed.
 - Run main.py. The following options are available:
@@ -74,9 +75,9 @@ RegionDCL                     0.495     0.036     0.281     0.039     0.882     
   - --no_random: **use this to disable random point sampling.**
   - --fixed: **use this to disable the proposed adaptive margin.**
   - --save_name: the name of the building pattern embedding file. By default it is pattern_embedding
-- For more options, please refer to the main.py.
+  - *For more options, please refer to the main.py.*
 - After trained, you will get a new embedding file in the /embeddings/Singapore/
-- You can use experiment/evaluator.py to evaluate it
+- You can run experiment/evaluator.py with proper test_path to evaluate it
 
 ## Pre-processing
 
