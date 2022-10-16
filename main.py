@@ -65,6 +65,6 @@ if __name__ == '__main__':
     # embeddings = pattern_trainer.get_embeddings()
     # Alternatively, you can load the trained pattern embedding
     embeddings = np.load(f'embeddings/{args.city}/{args.save_name}_20.npy')
-    region_trainer.train_region_triplet_freeze(epochs=20, embeddings=embeddings, adaptive=True, save_name='RegionDCL_',
+    region_trainer.train_region_triplet_freeze(epochs=20, embeddings=embeddings, adaptive=not args.fixed, save_name='RegionDCL_',
                                                window_sizes=[1000, 2000, 3000])
     print('Training finished. Embeddings have been saved in embeddings/ directory.')

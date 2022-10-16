@@ -13,7 +13,7 @@ import seaborn as sns
 from matplotlib import pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import KFold
-from tqdm import tqdm, trange
+from tqdm import trange
 
 from experiment.evaluator import Evaluator
 
@@ -143,7 +143,10 @@ if __name__ == '__main__':
                      hue="Model", data=df)
     plt.legend([], [], frameon=False)
     plt.tight_layout()
-    # save to pdf
-    # plt.savefig(f'visualization/{city.lower()}_data_sparsity_'
-    #             + 'land_use' if task == 'land' else 'population' + '.pdf')
+    # save picture
+    out_path = 'visualization/'
+    if not os.path.exists(out_path):
+        os.makedirs(out_path)
+    plt.savefig(f'visualization/{city.lower()}_data_sparsity_'
+                + 'land_use' if task == 'land' else 'population' + '.jpg')
     plt.show()

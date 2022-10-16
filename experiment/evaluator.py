@@ -175,22 +175,22 @@ def land_use_inference(test_path, baseline_embeddings, raw_labels, split, repeat
         pbar.set_description(f'Testing: {test_path}')
     else:
         pbar = range(1, repeat + 1)
-        for i in pbar:
-            set_seed(i)
-            train_index, test_index = train_test_split(idxs, test_size=split[2] / (split[0] + split[1] + split[2]),
-                                                       random_state=i)
-            # make sure the result is fully reproducible by fix seed = epoch number
-            evaluator = Evaluator(train_embeddings=embeddings[train_index], train_labels=labels[train_index],
-                                  test_embeddings=embeddings[test_index], test_labels=labels[test_index],
-                                  seed=i, verbose=verbose)
-            test_kl_div, test_l1, test_cos = evaluator.train(epochs=100)
-            kl_div.append(test_kl_div)
-            l1.append(test_l1)
-            cos.append(test_cos)
-            test_kl_div, test_l1, test_cos = evaluator.train(150)
-            kl_div.append(test_kl_div)
-            l1.append(test_l1)
-            cos.append(test_cos)
+    for i in pbar:
+        set_seed(i)
+        train_index, test_index = train_test_split(idxs, test_size=split[2] / (split[0] + split[1] + split[2]),
+                                                   random_state=i)
+        # make sure the result is fully reproducible by fix seed = epoch number
+        evaluator = Evaluator(train_embeddings=embeddings[train_index], train_labels=labels[train_index],
+                              test_embeddings=embeddings[test_index], test_labels=labels[test_index],
+                              seed=i, verbose=verbose)
+        test_kl_div, test_l1, test_cos = evaluator.train(epochs=100)
+        kl_div.append(test_kl_div)
+        l1.append(test_l1)
+        cos.append(test_cos)
+        test_kl_div, test_l1, test_cos = evaluator.train(150)
+        kl_div.append(test_kl_div)
+        l1.append(test_l1)
+        cos.append(test_cos)
     if not verbose:
         pbar.close()
     average_l1 = np.mean(l1)
@@ -222,18 +222,18 @@ def population_density_inference(test_path, baseline_embeddings, raw_labels, spl
         pbar.set_description(f'Testing: {test_path}')
     else:
         pbar = range(1, repeat + 1)
-        for epoch in pbar:
-            X_train, X_test, y_train, y_test = train_test_split(embeddings, labels, test_size=split[-1],
-                                                                random_state=epoch)
-            rf = RandomForestRegressor(n_estimators=100, random_state=epoch, n_jobs=8)
-            rf.fit(X_train, y_train)
-            y_pred = rf.predict(X_test)
-            MAE = metrics.mean_absolute_error(y_test, y_pred)
-            RMSE = np.sqrt(metrics.mean_squared_error(y_test, y_pred))
-            R2 = metrics.r2_score(y_test, y_pred)
-            MAE_list.append(MAE)
-            RMSE_list.append(RMSE)
-            R2_list.append(R2)
+    for epoch in pbar:
+        X_train, X_test, y_train, y_test = train_test_split(embeddings, labels, test_size=split[-1],
+                                                            random_state=epoch)
+        rf = RandomForestRegressor(n_estimators=100, random_state=epoch, n_jobs=8)
+        rf.fit(X_train, y_train)
+        y_pred = rf.predict(X_test)
+        MAE = metrics.mean_absolute_error(y_test, y_pred)
+        RMSE = np.sqrt(metrics.mean_squared_error(y_test, y_pred))
+        R2 = metrics.r2_score(y_test, y_pred)
+        MAE_list.append(MAE)
+        RMSE_list.append(RMSE)
+        R2_list.append(R2)
     if not verbose:
         pbar.close()
     average_MAE = np.mean(MAE_list)
