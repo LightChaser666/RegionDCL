@@ -59,7 +59,7 @@ RegionDCL                     0.495     0.036     0.281     0.039     0.882     
 
 #### Embedding Quality Analysis
 
-- Simply execute /evaluator/quality_analysis.py. You should be able to see the picture in the paper like this:![singapore_data_sparsity_land_use](../blob/master/visualization/singapore_data_sparsity_land_use.png?raw=true)
+- Simply execute /evaluator/quality_analysis.py. You should be able to see the picture in the paper like this:![singapore_data_sparsity_land_use](../master/visualization/singapore_data_sparsity_land_use.png?raw=true)
 
 - The following options are available:
   - --city: can be **Singapore** or **NYC**
