@@ -7,7 +7,7 @@
 - We released all raw & projected dataset and the processing script that generates the ground truth data.
 - We fixed the population task reproduction problem. 
   - The data/processed/Singapore/downstream_region.pkl wrongly uses the Singapore citizens data, which ignores permanent residents and foreigners that are common in Singapore.
-  - In our paper, we use more widely accepted WorldPop population data as ground truth. Now we correct the file all our results on Singapore can be exactly reproduced.
+  - In our paper, we use more widely accepted WorldPop population data as ground truth. Now, we correct the file and our results on Singapore can be exactly reproduced.
   - You can see from data_util/downstream/SingaporeSubzone to see how the ground truth is generated.
 
 
@@ -62,6 +62,7 @@ RegionDCL                     0.495     0.036     0.281     0.039     0.882     
 
 - Try --task pop, you can get:
 
+```
 =========================== Population Density Inference in Singapore ===========================
 Baseline                      MAE       std       RMSE      std       R-Square  std       
 Urban2Vec                     6487.310  562.799   8674.112  989.720   0.331     0.104     
@@ -73,6 +74,7 @@ Transformer                   6556.571  915.317   8667.137  1190.557  0.253     
 RegionDCL-no random           5896.042  733.596   8165.986  1240.533  0.336     0.103     
 RegionDCL-fixed margin        5863.208  612.696   7982.024  817.545   0.357     0.114     
 RegionDCL                     5591.122  570.922   7502.129  551.069   0.427     0.109     
+```
 
 - The main_experiment.py has the following options:
   - --city: can be **Singapore** or **NYC**
