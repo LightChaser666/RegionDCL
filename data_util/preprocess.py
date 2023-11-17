@@ -11,7 +11,7 @@ from shapely.geometry import Point
 from shapely.ops import unary_union
 from tqdm import tqdm, trange
 
-from data_util.grid import Grid
+from grid import Grid
 
 """
     This class implement common preprocessing for NYC and Singapore data
@@ -176,17 +176,17 @@ class Preprocess(object):
             dy = bounds[3] - bounds[1]
             diameter = math.sqrt(dx * dx + dy * dy) / 2
             # find the buildings in the shape
-            building_index = building_tree.query_ball_point(shape.centroid, diameter)
+            building_index = building_tree.query_ball_point([shape.centroid.x, shape.centroid.y], diameter)
             for j in building_index:
                 if shape.intersects(building_list[j]['shape']):
                     pattern['building'].append(j)
             # find the poi in the shape
-            poi_index = poi_tree.query_ball_point(shape.centroid, diameter)
+            poi_index = poi_tree.query_ball_point([shape.centroid.x, shape.centroid.y], diameter)
             for j in poi_index:
                 if shape.contains(Point(poi_loc[j][0], poi_loc[j][1])):
                     pattern['poi'].append(j)
             # find the random points in the shape
-            random_point_index = random_point_tree.query_ball_point(shape.centroid, diameter)
+            random_point_index = random_point_tree.query_ball_point([shape.centroid.x, shape.centroid.y], diameter)
             for j in random_point_index:
                 if shape.contains(Point(random_point_loc[j][0], random_point_loc[j][1])):
                     pattern['random_point'].append(j)
@@ -271,7 +271,6 @@ def parse_args():
 
 
 if __name__ == '__main__':
-    os.chdir('..')
     args = parse_args()
     city = args.city
     radius = args.radius

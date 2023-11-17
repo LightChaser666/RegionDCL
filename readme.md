@@ -59,13 +59,13 @@ RegionDCL                     0.495     0.036     0.281     0.039     0.882     
 
 #### Embedding Quality Analysis
 
-- Simply execute /evaluator/quality_analysis.py. You should be able to see the picture in the paper like this:![singapore_data_sparsity_land_use](../blob/master/visualization/singapore_data_sparsity_land_use.png?raw=true)
+- Simply execute /evaluator/quality_analysis.py. You should be able to see the picture in the paper like this:![singapore_data_sparsity_land_use](../master/visualization/singapore_data_sparsity_land_use.png?raw=true)
 
 - The following options are available:
   - --city: can be **Singapore** or **NYC**
   - --task: can be **land** or **pop**
 
-## Training
+## Training on Singapore dataset
 
 - Unzip the building_feature.7z in the data/processed/Singapore.
   - This is the feature extracted by **model/resnet.py**
@@ -79,19 +79,23 @@ RegionDCL                     0.495     0.036     0.281     0.039     0.882     
 - After trained, you will get a new embedding file in the /embeddings/Singapore/
 - You can run experiment/evaluator.py with proper test_path to evaluate it
 
-## Pre-processing
+## Pre-processing (required on NYC dataset)
 
 - We offered the preprocessing code for input shapefile. In principle it can be used for any OSM data.
   - You need **rasterio** to rasterize the building polygons. 
   - Use this if something wrong: **conda install -c https://conda.anaconda.org/ioos rasterio**
-- The NYC data is too large to store. We will offer a downloader later.
+- The raw and projected dataset (both NYC and Singapore, projected via ArcGIS): [Google Drive](https://drive.google.com/file/d/1WcIBcGDude5Q3_sZk_wXYpTQIPPAd6Ho/view?usp=sharing)
+- The preprocess code will automatically convert buildings to images (in forms of numpy 0-1) for you, but please extract the NYC building polygons features to data/processed/NYC/building_features.npy with resnet.py on your own, as NYC has too many buildings inconvenient for us to upload.
 
 ## Content
 
 ```
 RegionDCL
 ├── baselines # Randomly picked embeddings from other baselines for comparison
-├── data/processed/Singapore/ # Processed data of Singapore
+├── data
+| ├── raw  === Raw data of Sinagpore and NYC. Please download and decomporess the file from the Google Drive above.
+| ├── projected  ===  Projected data of Sinagpore and NYC. 
+| └── processed  === Store the processed data for model training.
 ├── data_util
 |	├── dataset.py  ===  Pytorch dataset for the model
 |	├── grid.py  === Poisson Disk Sampling algorithm
