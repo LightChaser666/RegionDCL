@@ -7,7 +7,7 @@ import os
 import pickle as pkl
 from collections import OrderedDict
 
-from experiment.evaluator import land_use_inference, population_density_inference
+from evaluator import land_use_inference, population_density_inference
 
 """
     Evaluate the embeddings on land use and population
@@ -16,7 +16,7 @@ from experiment.evaluator import land_use_inference, population_density_inferenc
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--city', type=str, default='NYC', help='City name, can be Singapore or NYC')
+    parser.add_argument('--city', type=str, default='Singapore', help='City name, can be Singapore or NYC')
     # Task
     parser.add_argument('--task', type=str, default='land', help='Task to evaluate, can be land or pop (=Land Use '
                                                                  'Inference / Population Density Inference')
@@ -34,7 +34,6 @@ def parse_args():
 
 
 if __name__ == '__main__':
-    os.chdir('..')
     args = parse_args()
     city = args.city
     task = args.task
@@ -55,13 +54,13 @@ if __name__ == '__main__':
     # We didn't cherry-pick, so our performance should be very close to the results in the paper, or even better.
 
     test_paths = {
-        'MGFN': 'baselines/nyc_mgfn_50.pkl',
-        # 'Urban2Vec': 'baselines/{}_urban2vec.pkl'.format(city.lower()),
-        # 'Place2Vec': 'baselines/{}_place2vec.pkl'.format(city.lower()),
-        # 'Doc2Vec': 'baselines/{}_doc2vec.pkl'.format(city.lower()),
-        # 'GAE': 'baselines/{}_gae.pkl'.format(city.lower()),
-        # 'DGI': 'baselines/{}_dgi.pkl'.format(city.lower()),
-        # 'Transformer': 'baselines/{}_transformer.pkl'.format(city.lower()),
+        # 'MGFN': 'baselines/nyc_mgfn_50.pkl',
+        'Urban2Vec': 'baselines/{}_urban2vec.pkl'.format(city.lower()),
+        'Place2Vec': 'baselines/{}_place2vec.pkl'.format(city.lower()),
+        'Doc2Vec': 'baselines/{}_doc2vec.pkl'.format(city.lower()),
+        'GAE': 'baselines/{}_gae.pkl'.format(city.lower()),
+        'DGI': 'baselines/{}_dgi.pkl'.format(city.lower()),
+        'Transformer': 'baselines/{}_transformer.pkl'.format(city.lower()),
     }
     if partition != 'default':
         if city == 'NYC':
@@ -70,10 +69,10 @@ if __name__ == '__main__':
         test_paths['RegionDCL'] = 'embeddings/{}/RegionDCL.pkl'.format(city)
         for key in test_paths:
             test_paths[key] = test_paths[key][:-4] + '_grid.pkl'
-    # else:
-    #     test_paths['RegionDCL-no random'] = 'embeddings/{}/RegionDCL_no_random.pkl'.format(city)
-    #     test_paths['RegionDCL-fixed margin'] = 'embeddings/{}/RegionDCL_fixed_margin.pkl'.format(city)
-    #     test_paths['RegionDCL'] = 'embeddings/{}/RegionDCL.pkl'.format(city)
+    else:
+        test_paths['RegionDCL-no random'] = 'embeddings/{}/RegionDCL_no_random.pkl'.format(city)
+        test_paths['RegionDCL-fixed margin'] = 'embeddings/{}/RegionDCL_fixed_margin.pkl'.format(city)
+        test_paths['RegionDCL'] = 'embeddings/{}/RegionDCL.pkl'.format(city)
 
 
 
