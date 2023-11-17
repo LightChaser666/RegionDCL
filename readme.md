@@ -2,6 +2,15 @@
 
 - This repository includes essential scripts of the proposed framework RegionDCL in our paper:  **Urban Region Representation Learning ｗith OpenStreetMap Building Footprints**
 
+## Whats' new
+
+- We released all raw & projected dataset and the processing script that generates the ground truth data.
+- We fixed the population task reproduction problem. 
+  - The data/processed/Singapore/downstream_region.pkl wrongly uses the Singapore citizens data, which ignores permanent residents and foreigners that are common in Singapore.
+  - In our paper, we use more widely accepted WorldPop population data as ground truth. Now we correct the file all our results on Singapore can be exactly reproduced.
+  - You can see from data_util/downstream/SingaporeSubzone to see how the ground truth is generated.
+
+
 ## Quick Start
 
 - With this repository, you can
@@ -51,6 +60,20 @@ RegionDCL-fixed margin        0.509     0.031     0.298     0.039     0.874     
 RegionDCL                     0.495     0.036     0.281     0.039     0.882     0.017     
 ```
 
+- Try --task pop, you can get:
+
+=========================== Population Density Inference in Singapore ===========================
+Baseline                      MAE       std       RMSE      std       R-Square  std       
+Urban2Vec                     6487.310  562.799   8674.112  989.720   0.331     0.104     
+Place2Vec                     6843.648  600.236   9501.109  853.687   0.141     0.128     
+Doc2Vec                       6818.389  416.066   9135.961  562.911   0.209     0.059     
+GAE                           7006.395  818.177   9467.563  1141.608  0.144     0.133     
+DGI                           6282.033  567.734   8233.419  892.947   0.346     0.127     
+Transformer                   6556.571  915.317   8667.137  1190.557  0.253     0.092     
+RegionDCL-no random           5896.042  733.596   8165.986  1240.533  0.336     0.103     
+RegionDCL-fixed margin        5863.208  612.696   7982.024  817.545   0.357     0.114     
+RegionDCL                     5591.122  570.922   7502.129  551.069   0.427     0.109     
+
 - The main_experiment.py has the following options:
   - --city: can be **Singapore** or **NYC**
   - --task: can be **land** or **pop**
@@ -77,7 +100,7 @@ RegionDCL                     0.495     0.036     0.281     0.039     0.882     
   - --save_name: the name of the building pattern embedding file. By default it is pattern_embedding
   - *For more options, please refer to the main.py.*
 - After trained, you will get a new embedding file in the /embeddings/Singapore/
-- You can run experiment/evaluator.py with proper test_path to evaluate it
+- The newly generated embeddings will be named RegionDCL_20.pkl, You can run experiment/evaluator.py with proper test_path to evaluate it. please change the filename in the script accordingly.
 
 ## Pre-processing (required on NYC dataset)
 
