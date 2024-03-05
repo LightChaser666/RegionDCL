@@ -130,7 +130,7 @@ class Preprocess(object):
             pkl.dump(building, f, protocol=4)
         with open(self.poi_out_path, 'wb') as f:
             pkl.dump(poi_not_attached, f, protocol=4)
-        return building, poi
+        return building, poi_not_attached
 
     def poisson_disk_sampling(self, building_list, poi_list, radius, force=False):
         random_point_out_path = self.out_path + 'random_point_' + str(radius) + 'm.pkl'
