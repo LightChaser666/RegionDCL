@@ -26,7 +26,7 @@ class NYCCensusTract:
     def __init__(self):
         self.region_path = 'data/projected/NYC/region/region.shp'
         self.landuse_in_path = 'data/projected/NYC/landuse/landuse.shp'
-        self.population_in_path = 'data/projected/NYC/population/population_cleaned.csv'
+        self.population_in_path = 'data/raw/NYC/population/worldpop_2020_un.csv'
         self.out_path = 'data/processed/NYC/downstream_region.pkl'
         self.merge_dict = {
             '01': 0,  # One &Two Family Buildings
@@ -80,12 +80,11 @@ class NYCCensusTract:
             regions.append(region)
         # load population data
         with open(self.population_in_path, 'r') as f:
-            for line in f:
+            lines = f.readlines()
+            for line in lines[1:]:
                 line = line.strip().split(',')
-                if line[0] not in region_dict:
-                    print('Population for census tract {} not found in the region shapefile'.format(line[0]))
-                    continue
-                region_dict[line[0]]['population'] = line[1]
+                region_id = int(line[0])
+                regions[region_id]['population'] = float(line[1])
         # load land use data
         print('Loading land use...')
         landuse_shapefile = gpd.read_file(self.landuse_in_path)
@@ -125,9 +124,6 @@ class NYCCensusTract:
             output['x'] = poi_row['geometry'].x
             output['y'] = poi_row['geometry'].y
             output['code'] = poi_row['code']
-            output['fclass'] = poi_row['fclass']
-            pois.append(output)
-        # turn code & fclass into numbers
         code_dict = {}
         fclass_dict = {}
         for poi in pois:
