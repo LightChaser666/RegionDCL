@@ -90,12 +90,12 @@ if __name__ == '__main__':
         result[key] = land_use_inference(value, baseline_embeddings, raw_labels, split, repeat) if task == 'land' else \
             population_density_inference(value, baseline_embeddings, raw_labels, split, repeat)
     if task == 'land':
-        print('=========================== Land Use Inference in Singapore ===========================')
+        print(f'=========================== Land Use Inference in {city} ===========================')
         print(
             'Baseline'.ljust(30) + 'L1'.ljust(10) + 'std'.ljust(10) + 'KL-Div'.ljust(10) + 'std'.ljust(10) + 'Cosine'.ljust(
                 10) + 'std'.ljust(10))
     else:
-        print('=========================== Population Density Inference in Singapore ===========================')
+        print(f'=========================== Population Density Inference in {city} ===========================')
         print(
             'Baseline'.ljust(30) + 'MAE'.ljust(10) + 'std'.ljust(10) + 'RMSE'.ljust(10) + 'std'.ljust(10) + 'R-Square'.ljust(
                 10) + 'std'.ljust(10))

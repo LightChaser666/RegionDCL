@@ -19,10 +19,9 @@ import re
 import pickle as pkl
 import geopandas as gpd
 import numpy as np
-from scipy.spatial import KDTree, Delaunay
+from scipy.spatial import KDTree, Delaunay, cKDTree
 from shapely.geometry import Point
 from tqdm import tqdm
-
 
 class SingaporeSubzone:
     def __init__(self):
