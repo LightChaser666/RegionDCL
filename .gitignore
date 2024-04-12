@@ -162,5 +162,9 @@ cython_debug/
 cache/
 data/raw/
 data/projected/
-data/processed/NYC/
+data/processed/NYC/building.pkl
+data/processed/NYC/building_raster.npz
+data/processed/NYC/building_rotation.npz
+data/processed/NYC/segmentation_100.pkl
+data/processed/NYC/segmentation.pkl
 .idea/

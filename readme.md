@@ -4,6 +4,7 @@
 
 ## Whats' new
 
+- We fixed the population reproduction problem in NYC and released our processed downstream_region.pkl.
 - We released all raw & projected dataset and the processing script that generates the ground truth data.
 - We fixed the population task reproduction problem. 
   - The data/processed/Singapore/downstream_region.pkl wrongly uses the Singapore citizens data, which ignores permanent residents and foreigners that are common in Singapore.
