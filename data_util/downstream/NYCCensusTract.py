@@ -124,6 +124,9 @@ class NYCCensusTract:
             output['x'] = poi_row['geometry'].x
             output['y'] = poi_row['geometry'].y
             output['code'] = poi_row['code']
+            output['fclass'] = poi_row['fclass']
+            pois.append(output)
+        # turn code & fclass into numbers
         code_dict = {}
         fclass_dict = {}
         for poi in pois:
